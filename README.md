@@ -1,3 +1,4 @@
+# Hillfort-2.0
 <img width="882" alt="Screenshot 2021-08-26 at 11 55 01 pm" src="https://user-images.githubusercontent.com/47541895/131046393-09a9daf6-29ac-4fe4-abd5-524dc1d4b944.png">
 
 An application supporting the exploration of archaelogical sites of interest !
@@ -6,5 +7,4 @@ An application supporting the exploration of archaelogical sites of interest !
 
 Users can use the application to help them navigate to Hillforts around Ireland, take photos, update notes on each site, tag favorites, rate each site and also track all sites on a map !
 
-
-# Hillfort-2.0
+Sign-up Today !
