@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
@@ -13,6 +14,8 @@ import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.BaseView
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 
 class HillfortView : BaseView(), AnkoLogger {
 
@@ -44,7 +47,7 @@ class HillfortView : BaseView(), AnkoLogger {
   override fun showHillfort(hillfort: HillfortModel) {
     if (hillfortTitle.text.isEmpty()) hillfortTitle.setText(hillfort.title)
     if (description.text.isEmpty())  description.setText(hillfort.description)
-    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+    Glide.with(this).load(hillfort.image).into(hillfortImage);
 
     if (hillfort.image != null) {
       chooseImage.setText(R.string.change_hillfort_image)
