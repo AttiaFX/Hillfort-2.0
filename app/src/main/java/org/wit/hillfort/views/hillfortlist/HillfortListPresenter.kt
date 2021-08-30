@@ -21,9 +21,26 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.MAPS)
   }
 
-  fun loadHillforts() {
+  fun doShowFavorites() {
+    view?.navigateTo(VIEW.FAVORITES)
+  }
+
+  fun doShowHillforts() {
+    view?.navigateTo(VIEW.LIST)
+  }
+
+  fun loadHillforts(onlyFavorites: Boolean) {
     doAsync {
-      val hillforts = app.hillforts.findAll()
+      var hillforts = app.hillforts.findAll()
+      if (onlyFavorites) {
+        val favorites: MutableList<HillfortModel> = mutableListOf()
+        for (hill in hillforts) {
+          if (hill.favorite) {
+            favorites.add(hill)
+          }
+        }
+        hillforts = favorites
+      }
       uiThread {
         view?.showHillforts(hillforts)
       }

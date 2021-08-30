@@ -23,7 +23,7 @@ class HillfortListView :  BaseView(), HillfortListener {
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    presenter.loadHillforts()
+    presenter.loadHillforts(onlyFavorites = false)
   }
 
   override fun showHillforts(hillforts: List<HillfortModel>) {
@@ -40,6 +40,7 @@ class HillfortListView :  BaseView(), HillfortListener {
     when (item?.itemId) {
       R.id.item_add -> presenter.doAddHillfort()
       R.id.item_map -> presenter.doShowHillfortsMap()
+      R.id.item_favorite -> presenter.doShowFavorites()
       R.id.item_logout ->presenter.doLogout()
     }
     return super.onOptionsItemSelected(item)
@@ -50,7 +51,7 @@ class HillfortListView :  BaseView(), HillfortListener {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    presenter.loadHillforts()
+    presenter.loadHillforts(onlyFavorites = false)
     super.onActivityResult(requestCode, resultCode, data)
   }
 }

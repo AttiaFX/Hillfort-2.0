@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
-import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.BaseView
@@ -36,19 +36,22 @@ class HillfortView : BaseView(), AnkoLogger {
     presenter = initPresenter (HillfortPresenter(this)) as HillfortPresenter
 
     chooseImage.setOnClickListener {
-      presenter.cacheHillfort(hillfortTitle.text.toString(), description.text.toString())
+      presenter.cacheHillfort(hillfortTitle.text.toString(), description.text.toString(), fav.isChecked, ratingBar.rating)
       presenter.doSelectImage()
     }
+
   }
 
   override fun showHillfort(hillfort: HillfortModel) {
     if (hillfortTitle.text.isEmpty()) hillfortTitle.setText(hillfort.title)
     if (description.text.isEmpty())  description.setText(hillfort.description)
-    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
 
-    if (hillfort.image != null) {
-      chooseImage.setText(R.string.change_hillfort_image)
-    }
+    fav.isChecked = hillfort.favorite
+    ratingBar.rating = hillfort.rating
+
+    Glide.with(this).load(hillfort.image).into(hillfortImage);
+
+    if (hillfort.image != null) { chooseImage.setText(R.string.change_hillfort_image) }
     this.showLocation(hillfort.location)
   }
 
@@ -72,7 +75,7 @@ class HillfortView : BaseView(), AnkoLogger {
         if (hillfortTitle.text.toString().isEmpty()) {
           toast(R.string.enter_hillfort_title)
         } else {
-          presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString())
+          presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), fav.isChecked, ratingBar.rating)
         }
       }
       R.id.item_cancel -> {
